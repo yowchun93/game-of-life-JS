@@ -16,32 +16,39 @@
   _.prototype = {
     next: function(){
       this.prevBoard = cloneArray(this.board);
-      //
+      
       for (var y = 0 ; y <this.height ; y++) {
         for ( var x =0; x < this.width ; x++) {
           var neighbors = this.aliveNeighbors(this.prevBoard, x ,y);
+          console.log(y,x, ':', neighbors);
         }
       }
     },
     // algorithm for calculating neighbors
     aliveNeighbors: function(array, x ,y) {
-      var neighbors = [
-        array[y-1][x-1], array[y-1][x],array[y-1][x+1],
-        array[y][x-1], array[y][x+1],
-        array[y+1][x-1], array[y+1][x], array[y+1][x-1]
-      ].forEach(function (a) {
-        sum += ||a;
-      });
+      var sum = 0;
+      // when a call is trying to check an empty cell, return an empty array
+      var prevRow = array[y-1] || []
+      var nextRow = array[y+1] || []
 
+      var neighbors = [
+        prevRow[x-1], prevRow[x],prevRow[x+1],
+        array[y][x-1], array[y][x+1],
+        nextRow[x-1], nextRow[x], nextRow[x-1]
+      ].forEach(function (a) {
+        // undefined to and 0 to 0
+        sum += +!!a;
+      });
+      
       return sum;
     },
-
+    
     toString: function (){
 
       return this.board.map(function ( row ) { return row.join(' ');}).join('\n');
     }
   }
-
+  
   //
   function cloneArray(array) {
     // creates a shallow copy of an array
