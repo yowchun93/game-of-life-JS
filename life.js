@@ -108,6 +108,8 @@
         for(var x=0; x < this.size; x++) {
           var cell = document.createElement('td');
           var checkbox = document.createElement('input');
+          this.checkboxes[y][x] = checkbox;
+          checkbox.coords = [y,x];
           checkbox.type = 'checkbox'
           
           cell.appendChild(checkbox);
@@ -119,8 +121,26 @@
 
       }
       this.grid.appendChild(fragment);
+    },
+
+    get boardArray(){
+      // 
+      // console.log(this.checkboxes);
+      return this.checkboxes.map(function (row) {
+        return row.map(function (checkbox){
+          return +checkbox.checked;
+        });
+      });
+    },
+
+    play: function(){
+      this.game = new Life(this.boardArray);
+    },
+
+    next: function(){
+
     }
-  }
+  };
 
 
 })();
